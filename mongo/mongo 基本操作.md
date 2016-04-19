@@ -45,51 +45,51 @@
 `db.getMongo()`
 
 ### 集合的操作
-1,创建一个集合
+1. 创建一个集合
 `db.createCollection('newData',{size:20,capped:5,max:100})
-2,获得指定名称的集合
+2. 获得指定名称的集合
 `db.getCollection('newData')`
-3,得到当前db的所有聚集集合
+3. 得到当前db的所有聚集集合
 `db.getCollectionNames()`
-4,显示当前db所有聚集索引的状态
+4. 显示当前db所有聚集索引的状态
 `db.printCollectionStats()`
 
 ###用户操作
-1,添加一个用户
+1. 添加一个用户
 `db.addUser('name')`
 `db.addUser('userName','pwd123',true)` 用户名、密码、只读
-2,数据库认证、安全模式
+2. 数据库认证、安全模式
 `db.auth('userName','1234')`
-3,显示当前所有用户
+3. 显示当前所有用户
 `show users`
-4,删除用户
+4. 删除用户
 `db.removeUser('userName')`
 
 ###错误日志
-1,查询之前的错误信息
+1. 查询之前的错误信息
 `db.getPrevError()`
-2,清除错误记录
+2. 清除错误记录
 `db.resetError()`
 
 ###集合的基本操作
-1,查看帮助 : `db.mydata.help()`
-2,查询数据条数: `db.mydata.count()`
-3,查看数据空间大小:`db.mydata.dataSize()`
-4,查看当前集合所在位置:`db.mydata.getDB()`
-5,查看当前集合的状态:`db.mydata.stats()`
-6,得到集合总大小:`db.mydata.totalSize()`
-7,获得集合存储空间大小:`db.mydata.storageSize()`
-8,Shard版本信息:`db.mydata.getShardVersion()
-9,集合重命名:`db.mydata.renameCollection('newData')
-10,删除当前集合:`db.mydata.drop`
+1. 查看帮助 : `db.mydata.help()`
+2. 查询数据条数: `db.mydata.count()`
+3. 查看数据空间大小:`db.mydata.dataSize()`
+4. 查看当前集合所在位置:`db.mydata.getDB()`
+5. 查看当前集合的状态:`db.mydata.stats()`
+6. 得到集合总大小:`db.mydata.totalSize()`
+7. 获得集合存储空间大小:`db.mydata.storageSize()`
+8. Shard版本信息:`db.mydata.getShardVersion()
+9. 集合重命名:`db.mydata.renameCollection('newData')
+10. 删除当前集合:`db.mydata.drop`
 
 ###集合查询
-1,查询所有记录
+1. 查询所有记录
 `db.mydata.find()` 默认显示20条记录
 `DBQuery.shellBatchSize=n `,每页显示n条记录
-2,过滤重复数据
+2. 过滤重复数据
 `db.mydata.distinct('name')` 过滤不重复的name记录
-3,查询操作
+3. 查询操作
 > `db.mydata.find({'age':22})` 
 	查询age=22的记录
 > `db.mydata.find({age:{$gt:22}})` 
@@ -118,27 +118,27 @@
 	查询age>25的记录数量
 
 ### 索引操作
-1,创建索引
+1. 创建索引
 `db.mydata.ensureIndex({name:1})`
 `db.mydata.ensureIndex({name:1,ts:-1})`
-2,查询当前集合所有索引
+2. 查询当前集合所有索引
 `db.mydata.getIndexes()`
-3,查询总索引记录大小
+3. 查询总索引记录大小
 `db.mydata.totalIndexSize()`
-4,读取当前集合的所有index信息
+4. 读取当前集合的所有index信息
 `db.mydata.reIndex()`
-5,删除指定索引
+5. 删除指定索引
 `db.mydata.dropIndex('name')`
 
 ###修改，添加，删除
-1,添加
+1. 添加
 `db.mydata.save({name:'zhangsan',age:25,sex:true})`
-2,更新
+2. 更新
 `db.mydata.update({name:'zhangsan'},{$inc:{age:50},$set:{name:'wangwu'}},false,true)`
 	类似:update mydata set name='wangwu',age=age+50 where name="zhangsan"
-3,删除
+3. 删除
 `db.mydata.remove({age:13})`
-4,查询修改删除
+4. 查询修改删除
 `db.users.findAndModify({
 	query:{age:{$gte:25}}
 	,sort:{age:-1}
@@ -147,37 +147,39 @@
 })
 
 ###语句块操作
-1，print() ,printjson()
-2,tojson()
-3,find游标查询
-4,forEach()迭代循环
-5,it 查询更多的记录信息；类似more
+1. print() ,printjson()
+2. tojson()
+3. find游标查询
+4. forEach()迭代循环
+5. it 查询更多的记录信息；类似more
 
 ###命令解析
 #### update()
-db.collection.update( criteria, objNew, upsert, multi )
+`db.collection.update( criteria, objNew, upsert, multi )`
 
-criteria : update的查询条件，类似sql update查询内where后面的
-objNew   : update的对象和一些更新的操作符（如$,$inc...）等，也可以理解为sql update查询内set后面的
-upsert   : 这个参数的意思是，如果不存在update的记录，是否插入objNew,true为插入，默认是false，不插入。
-multi    : mongodb默认是false,只更新找到的第一条记录，如果这个参数为true,就把按条件查出来多条记录全部更新。
+> * criteria : update的查询条件，类似sql update查询内where后面的
+> * objNew : update的对象和一些更新的操作符（如$,$inc...）等，也可以理解为sql update查询内set后面的
+> * upsert: 这个参数的意思是，如果不存在update的记录，是否插入objNew,true为插入，默认是false，不插入。
+> * multi: mongodb默认是false,只更新找到的第一条记录，如果这个参数为true,就把按条件查出来多条记录全部更新。
 #### 更新操作符
 
-1) $inc {$inc:{field:value}}
+1. $inc {$inc:{field:value}}
 	自增加
-2) $set {$set:{field:value}}
+2. $set {$set:{field:value}}
 	类似 set field=value
-3) $unset {$unset:{field:1}}
+3. $unset {$unset:{field:1}}
 	删除field字段
-4) $push {$push:{field:value}}
+4. $push {$push:{field:value}}
 	把value追加到field字段值中，field字段值必须为数组
-5) $pushAll {$pushAll:{field:value_array}}
+5. $pushAll {$pushAll:{field:value_array}}
 	一次追加多个值到一个field字段数组中
 ....
 $addToSet,$pop,$pull,
-10) $操作符
+10. $操作符
 如数据为:
+`
 { "_id" : ObjectId("4b97e62bf1d8c7152c9ccb74"), "title" : "ABC",  "comments" : [ { "school" : "joe", "data" : 3 }, { "school" : "jane", "data" : 7 } ] }
+`
 
 `db.mydata.update( {'comments.school':'people'},{ $inc:{'comments.$.data' : 1}})`
 	查询comments中school为people的记录，并更新data的数据
